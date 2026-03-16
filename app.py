@@ -57,28 +57,55 @@ class GenReV3(nn.Module):
         return torch.cat([c_e, cat_e], dim=1)
 
     @torch.no_grad()
-    def sample_recourse(self, src_cont_bins, src_cat, temp=0.5):
+    def sample_recourse(self, src_cont_bins, src_cat, immutable_indices=None, increasing_indices=None, temp=0.5):
         self.eval()
         bs = src_cont_bins.size(0)
         memory = self.transformer.encoder(self.pos_encoder(self._get_embeddings(src_cont_bins, src_cat)))
         curr_embs = self.sos_emb.expand(bs, -1, -1)
         s_cont, s_cat = [], []
+        
+        # Default empty lists if none provided
+        imm_idx = immutable_indices if immutable_indices else []
+        inc_idx = increasing_indices if increasing_indices else []
+
         for i in range(self.seq_len):
             tgt = self.pos_encoder(curr_embs)
             mask = self.transformer.generate_square_subsequent_mask(tgt.size(1)).to(DEVICE)
             h = self.transformer.decoder(tgt, memory, tgt_mask=mask)[:, -1, :]
-            if i < self.num_cont:
-                logits = self.cont_heads[i](h) / temp
+            
+            # Determine if we are in continuous or categorical range
+            is_cont = i < self.num_cont
+            logits = self.cont_heads[i](h) if is_cont else self.cat_heads[i - self.num_cont](h)
+            logits = logits / temp
+            
+            # --- APPLY CONSTRAINTS ---
+            # Immutability: Force the original bin/value
+            if i in imm_idx:
+                val = src_cont_bins[:, i] if is_cont else src_cat[:, i - self.num_cont]
+                choice = val.unsqueeze(-1)
+            
+            # Monotonicity (Increasing only): Mask bins lower than current
+            elif i in inc_idx and is_cont:
+                current_bin = src_cont_bins[:, i].item()
+                # Create mask: -inf for all bins < current_bin
+                m = torch.full_like(logits, float('-inf'))
+                m[:, current_bin:] = 0 
+                logits = logits + m
                 choice = torch.argmax(logits, dim=-1, keepdim=True)
+            
+            else:
+                choice = torch.argmax(logits, dim=-1, keepdim=True)
+
+            # --- PREPARE NEXT STEP ---
+            if is_cont:
                 s_cont.append(choice)
                 next_emb = self.cont_embs[i](choice.squeeze(-1)).unsqueeze(1)
             else:
-                idx = i - self.num_cont
-                logits = self.cat_heads[idx](h) / temp
-                choice = torch.argmax(logits, dim=-1, keepdim=True)
                 s_cat.append(choice)
-                next_emb = self.cat_embs[idx](choice.squeeze(-1)).unsqueeze(1)
+                next_emb = self.cat_embs[i - self.num_cont](choice.squeeze(-1)).unsqueeze(1)
+            
             curr_embs = torch.cat([curr_embs, next_emb], dim=1)
+            
         return torch.cat(s_cont, dim=1), torch.cat(s_cat, dim=1)
 
 class PaperANNProxy(nn.Module):
@@ -204,7 +231,7 @@ with col_recourse:
         st.balloons()
         st.success("User is already approved. No action needed.")
     else:
-        # Binner: Cont -> Bins
+        # 1. PREPARE INPUTS: Binner (Continuous values -> Bin indices)
         x_fact_bins = []
         for i in range(67):
             idx = np.digitize(st.session_state.fact_cont[i], bin_edges[i]) - 1
@@ -212,10 +239,37 @@ with col_recourse:
             x_fact_bins.append(idx)
         
         src_bins_t = torch.tensor([x_fact_bins], dtype=torch.long)
+
+        # 2. IDENTIFY CONSTRAINT INDICES
+        # We find which indices in the sequence (cont + cat) are restricted
+        imm_indices = []
+        inc_indices = []
         
-        with st.spinner("Calculating optimal path..."):
-            rec_bins, rec_cat = genre.sample_recourse(src_bins_t, x_fact_cat, temp=0.5)
+        # Check continuous features (Indices 0 to 66)
+        for i, name in enumerate(meta['continuous_features']):
+            if name in meta.get('immutable_features', []):
+                imm_indices.append(i)
+            # Optional: handle features that can only increase (e.g., age, tenure)
+            if name in meta.get('increasing_features', []):
+                inc_indices.append(i)
         
+        # Check categorical features (Indices 67 onwards)
+        for i, name in enumerate(meta['categorical_features']):
+            seq_idx = i + 67 
+            if name in meta.get('immutable_features', []):
+                imm_indices.append(seq_idx)
+
+        # GENERATE CONSTRAINED RECOURSE
+        with st.spinner("Calculating optimal constrained path..."):
+            rec_bins, rec_cat = genre.sample_recourse(
+                src_bins_t, 
+                x_fact_cat, 
+                immutable_indices=imm_indices,
+                increasing_indices=inc_indices,
+                temp=0.5
+            )
+        
+        # DECODE BINS BACK TO SCALED VALUES
         rec_cont_scaled = []
         for i in range(67):
             edges = bin_edges[i]
