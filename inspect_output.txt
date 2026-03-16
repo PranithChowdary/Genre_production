@@ -1,0 +1,472 @@
+============================================================
+ GENRE_V3 DEPLOYMENT ASSET INSPECTION
+============================================================
+
+[1] METADATA (meta.json):
+{'categorical_features': ['term',
+                          'grade',
+                          'sub_grade',
+                          'emp_length',
+                          'home_ownership',
+                          'verification_status',
+                          'pymnt_plan',
+                          'purpose',
+                          'addr_state',
+                          'initial_list_status',
+                          'application_type',
+                          'hardship_flag',
+                          'disbursement_method',
+                          'debt_settlement_flag'],
+ 'categorical_indices': [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+ 'categorical_value_maps': {'addr_state': {'AK': 17,
+                                           'AL': 1,
+                                           'AR': 38,
+                                           'AZ': 0,
+                                           'CA': 6,
+                                           'CO': 25,
+                                           'CT': 36,
+                                           'DC': 46,
+                                           'DE': 48,
+                                           'FL': 8,
+                                           'GA': 10,
+                                           'HI': 11,
+                                           'ID': 40,
+                                           'IL': 19,
+                                           'IN': 23,
+                                           'KS': 41,
+                                           'KY': 16,
+                                           'LA': 35,
+                                           'MA': 18,
+                                           'MD': 28,
+                                           'ME': 44,
+                                           'MI': 9,
+                                           'MN': 33,
+                                           'MO': 31,
+                                           'MS': 34,
+                                           'MT': 32,
+                                           'NC': 2,
+                                           'ND': 30,
+                                           'NE': 26,
+                                           'NH': 43,
+                                           'NJ': 5,
+                                           'NM': 37,
+                                           'NV': 20,
+                                           'NY': 4,
+                                           'OH': 22,
+                                           'OK': 15,
+                                           'OR': 27,
+                                           'PA': 14,
+                                           'RI': 47,
+                                           'SC': 29,
+                                           'SD': 42,
+                                           'TN': 13,
+                                           'TX': 12,
+                                           'UT': 39,
+                                           'VA': 3,
+                                           'VT': 21,
+                                           'WA': 7,
+                                           'WI': 24,
+                                           'WV': 45,
+                                           'WY': 49},
+                            'application_type': {'Individual': 1,
+                                                 'Joint App': 0},
+                            'debt_settlement_flag': {'N': 0, 'Y': 1},
+                            'disbursement_method': {'Cash': 1, 'DirectPay': 0},
+                            'emp_length': {'1 year': 5,
+                                           '10+ years': 3,
+                                           '2 years': 0,
+                                           '3 years': 2,
+                                           '4 years': 8,
+                                           '5 years': 4,
+                                           '6 years': 1,
+                                           '7 years': 10,
+                                           '8 years': 9,
+                                           '9 years': 7,
+                                           '< 1 year': 6},
+                            'grade': {'A': 0,
+                                      'B': 2,
+                                      'C': 4,
+                                      'D': 1,
+                                      'E': 3,
+                                      'F': 5,
+                                      'G': 6},
+                            'hardship_flag': {'N': 0, 'Y': 1},
+                            'home_ownership': {'ANY': 3,
+                                               'MORTGAGE': 1,
+                                               'NONE': 4,
+                                               'OTHER': 5,
+                                               'OWN': 2,
+                                               'RENT': 0},
+                            'initial_list_status': {'f': 1, 'w': 0},
+                            'purpose': {'car': 2,
+                                        'credit_card': 0,
+                                        'debt_consolidation': 1,
+                                        'educational': 13,
+                                        'home_improvement': 5,
+                                        'house': 8,
+                                        'major_purchase': 6,
+                                        'medical': 4,
+                                        'moving': 7,
+                                        'other': 3,
+                                        'renewable_energy': 11,
+                                        'small_business': 9,
+                                        'vacation': 10,
+                                        'wedding': 12},
+                            'pymnt_plan': {'n': 0, 'y': 1},
+                            'sub_grade': {'A1': 6,
+                                          'A2': 0,
+                                          'A3': 14,
+                                          'A4': 16,
+                                          'A5': 12,
+                                          'B1': 10,
+                                          'B2': 13,
+                                          'B3': 2,
+                                          'B4': 4,
+                                          'B5': 8,
+                                          'C1': 5,
+                                          'C2': 20,
+                                          'C3': 11,
+                                          'C4': 17,
+                                          'C5': 21,
+                                          'D1': 9,
+                                          'D2': 7,
+                                          'D3': 18,
+                                          'D4': 15,
+                                          'D5': 1,
+                                          'E1': 3,
+                                          'E2': 27,
+                                          'E3': 26,
+                                          'E4': 22,
+                                          'E5': 24,
+                                          'F1': 23,
+                                          'F2': 25,
+                                          'F3': 30,
+                                          'F4': 33,
+                                          'F5': 19,
+                                          'G1': 28,
+                                          'G2': 31,
+                                          'G3': 34,
+                                          'G4': 32,
+                                          'G5': 29},
+                            'term': {' 36 months': 0, ' 60 months': 1},
+                            'verification_status': {'Not Verified': 2,
+                                                    'Source Verified': 1,
+                                                    'Verified': 0}},
+ 'categorical_vocab_sizes': {'addr_state': 50,
+                             'application_type': 2,
+                             'debt_settlement_flag': 2,
+                             'disbursement_method': 2,
+                             'emp_length': 11,
+                             'grade': 7,
+                             'hardship_flag': 2,
+                             'home_ownership': 6,
+                             'initial_list_status': 2,
+                             'purpose': 14,
+                             'pymnt_plan': 2,
+                             'sub_grade': 35,
+                             'term': 2,
+                             'verification_status': 3},
+ 'continuous_features': ['loan_amnt',
+                         'funded_amnt',
+                         'funded_amnt_inv',
+                         'int_rate',
+                         'installment',
+                         'annual_inc',
+                         'dti',
+                         'delinq_2yrs',
+                         'inq_last_6mths',
+                         'open_acc',
+                         'pub_rec',
+                         'revol_bal',
+                         'revol_util',
+                         'total_acc',
+                         'collections_12_mths_ex_med',
+                         'policy_code',
+                         'acc_now_delinq',
+                         'tot_coll_amt',
+                         'tot_cur_bal',
+                         'open_acc_6m',
+                         'open_act_il',
+                         'open_il_12m',
+                         'open_il_24m',
+                         'total_bal_il',
+                         'open_rv_12m',
+                         'open_rv_24m',
+                         'max_bal_bc',
+                         'all_util',
+                         'total_rev_hi_lim',
+                         'inq_fi',
+                         'total_cu_tl',
+                         'inq_last_12m',
+                         'acc_open_past_24mths',
+                         'avg_cur_bal',
+                         'bc_open_to_buy',
+                         'bc_util',
+                         'chargeoff_within_12_mths',
+                         'delinq_amnt',
+                         'mo_sin_old_il_acct',
+                         'mo_sin_old_rev_tl_op',
+                         'mo_sin_rcnt_rev_tl_op',
+                         'mo_sin_rcnt_tl',
+                         'mort_acc',
+                         'mths_since_recent_bc',
+                         'mths_since_recent_inq',
+                         'num_accts_ever_120_pd',
+                         'num_actv_bc_tl',
+                         'num_actv_rev_tl',
+                         'num_bc_sats',
+                         'num_bc_tl',
+                         'num_il_tl',
+                         'num_op_rev_tl',
+                         'num_rev_accts',
+                         'num_rev_tl_bal_gt_0',
+                         'num_sats',
+                         'num_tl_120dpd_2m',
+                         'num_tl_30dpd',
+                         'num_tl_90g_dpd_24m',
+                         'num_tl_op_past_12m',
+                         'pct_tl_nvr_dlq',
+                         'percent_bc_gt_75',
+                         'pub_rec_bankruptcies',
+                         'tax_liens',
+                         'tot_hi_cred_lim',
+                         'total_bal_ex_mort',
+                         'total_bc_limit',
+                         'total_il_high_credit_limit'],
+ 'continuous_indices': [0,
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7,
+                        8,
+                        9,
+                        10,
+                        11,
+                        12,
+                        13,
+                        14,
+                        15,
+                        16,
+                        17,
+                        18,
+                        19,
+                        20,
+                        21,
+                        22,
+                        23,
+                        24,
+                        25,
+                        26,
+                        27,
+                        28,
+                        29,
+                        30,
+                        31,
+                        32,
+                        33,
+                        34,
+                        35,
+                        36,
+                        37,
+                        38,
+                        39,
+                        40,
+                        41,
+                        42,
+                        43,
+                        44,
+                        45,
+                        46,
+                        47,
+                        48,
+                        49,
+                        50,
+                        51,
+                        52,
+                        53,
+                        54,
+                        55,
+                        56,
+                        57,
+                        58,
+                        59,
+                        60,
+                        61,
+                        62,
+                        63,
+                        64,
+                        65,
+                        66],
+ 'immutable_features': ['grade', 'sub_grade', 'addr_state', 'policy_code'],
+ 'mutable_features': ['loan_amnt',
+                      'funded_amnt',
+                      'funded_amnt_inv',
+                      'term',
+                      'int_rate',
+                      'installment',
+                      'emp_length',
+                      'home_ownership',
+                      'annual_inc',
+                      'verification_status',
+                      'pymnt_plan',
+                      'purpose',
+                      'dti',
+                      'delinq_2yrs',
+                      'inq_last_6mths',
+                      'open_acc',
+                      'pub_rec',
+                      'revol_bal',
+                      'revol_util',
+                      'total_acc',
+                      'initial_list_status',
+                      'collections_12_mths_ex_med',
+                      'application_type',
+                      'acc_now_delinq',
+                      'tot_coll_amt',
+                      'tot_cur_bal',
+                      'open_acc_6m',
+                      'open_act_il',
+                      'open_il_12m',
+                      'open_il_24m',
+                      'total_bal_il',
+                      'open_rv_12m',
+                      'open_rv_24m',
+                      'max_bal_bc',
+                      'all_util',
+                      'total_rev_hi_lim',
+                      'inq_fi',
+                      'total_cu_tl',
+                      'inq_last_12m',
+                      'acc_open_past_24mths',
+                      'avg_cur_bal',
+                      'bc_open_to_buy',
+                      'bc_util',
+                      'chargeoff_within_12_mths',
+                      'delinq_amnt',
+                      'mo_sin_old_il_acct',
+                      'mo_sin_old_rev_tl_op',
+                      'mo_sin_rcnt_rev_tl_op',
+                      'mo_sin_rcnt_tl',
+                      'mort_acc',
+                      'mths_since_recent_bc',
+                      'mths_since_recent_inq',
+                      'num_accts_ever_120_pd',
+                      'num_actv_bc_tl',
+                      'num_actv_rev_tl',
+                      'num_bc_sats',
+                      'num_bc_tl',
+                      'num_il_tl',
+                      'num_op_rev_tl',
+                      'num_rev_accts',
+                      'num_rev_tl_bal_gt_0',
+                      'num_sats',
+                      'num_tl_120dpd_2m',
+                      'num_tl_30dpd',
+                      'num_tl_90g_dpd_24m',
+                      'num_tl_op_past_12m',
+                      'pct_tl_nvr_dlq',
+                      'percent_bc_gt_75',
+                      'pub_rec_bankruptcies',
+                      'tax_liens',
+                      'tot_hi_cred_lim',
+                      'total_bal_ex_mort',
+                      'total_bc_limit',
+                      'total_il_high_credit_limit',
+                      'hardship_flag',
+                      'disbursement_method',
+                      'debt_settlement_flag'],
+ 'num_cat': 14,
+ 'num_cont': 67}
+
+[2] BIN EDGES (bin_edges_v3.npy):
+    - Number of continuous features binned: 67
+      Feature 0 bin count: 100
+      Feature 1 bin count: 100
+      Feature 2 bin count: 100
+      Feature 3 bin count: 100
+      Feature 4 bin count: 100
+      Feature 5 bin count: 100
+      Feature 6 bin count: 100
+      Feature 7 bin count: 11
+      Feature 8 bin count: 7
+      Feature 9 bin count: 38
+      Feature 10 bin count: 8
+      Feature 11 bin count: 100
+      Feature 12 bin count: 100
+      Feature 13 bin count: 70
+      Feature 14 bin count: 3
+      Feature 15 bin count: 1
+      Feature 16 bin count: 2
+      Feature 17 bin count: 100
+      Feature 18 bin count: 100
+      Feature 19 bin count: 8
+      Feature 20 bin count: 22
+      Feature 21 bin count: 7
+      Feature 22 bin count: 12
+      Feature 23 bin count: 100
+      Feature 24 bin count: 11
+      Feature 25 bin count: 19
+      Feature 26 bin count: 100
+      Feature 27 bin count: 100
+      Feature 28 bin count: 100
+      Feature 29 bin count: 11
+      Feature 30 bin count: 20
+      Feature 31 bin count: 18
+      Feature 32 bin count: 22
+      Feature 33 bin count: 100
+      Feature 34 bin count: 100
+      Feature 35 bin count: 100
+      Feature 36 bin count: 2
+      Feature 37 bin count: 5
+      Feature 38 bin count: 100
+      Feature 39 bin count: 100
+      Feature 40 bin count: 96
+      Feature 41 bin count: 57
+      Feature 42 bin count: 13
+      Feature 43 bin count: 100
+      Feature 44 bin count: 25
+      Feature 45 bin count: 14
+      Feature 46 bin count: 17
+      Feature 47 bin count: 25
+      Feature 48 bin count: 23
+      Feature 49 bin count: 33
+      Feature 50 bin count: 47
+      Feature 51 bin count: 32
+      Feature 52 bin count: 49
+      Feature 53 bin count: 24
+      Feature 54 bin count: 38
+      Feature 55 bin count: 1
+      Feature 56 bin count: 2
+      Feature 57 bin count: 8
+      Feature 58 bin count: 14
+      Feature 59 bin count: 100
+      Feature 60 bin count: 51
+      Feature 61 bin count: 4
+      Feature 62 bin count: 6
+      Feature 63 bin count: 100
+      Feature 64 bin count: 100
+      Feature 65 bin count: 100
+      Feature 66 bin count: 100
+
+[3] PREPROCESSING (Joblibs):
+    - num_scaler.joblib: Loaded successfully (MinMaxScaler)
+    - cat_imputer.joblib: Loaded successfully (SimpleImputer)
+      Features: ['term', 'grade', 'sub_grade', 'emp_length', 'home_ownership', 'verification_status', 'pymnt_plan', 'purpose', 'addr_state', 'initial_list_status', 'application_type', 'hardship_flag', 'disbursement_method', 'debt_settlement_flag']
+    - num_imputer.joblib: Loaded successfully (SimpleImputer)
+      Features: ['loan_amnt', 'funded_amnt', 'funded_amnt_inv', 'int_rate', 'installment', 'annual_inc', 'dti', 'delinq_2yrs', 'inq_last_6mths', 'open_acc', 'pub_rec', 'revol_bal', 'revol_util', 'total_acc', 'collections_12_mths_ex_med', 'policy_code', 'acc_now_delinq', 'tot_coll_amt', 'tot_cur_bal', 'open_acc_6m', 'open_act_il', 'open_il_12m', 'open_il_24m', 'total_bal_il', 'open_rv_12m', 'open_rv_24m', 'max_bal_bc', 'all_util', 'total_rev_hi_lim', 'inq_fi', 'total_cu_tl', 'inq_last_12m', 'acc_open_past_24mths', 'avg_cur_bal', 'bc_open_to_buy', 'bc_util', 'chargeoff_within_12_mths', 'delinq_amnt', 'mo_sin_old_il_acct', 'mo_sin_old_rev_tl_op', 'mo_sin_rcnt_rev_tl_op', 'mo_sin_rcnt_tl', 'mort_acc', 'mths_since_recent_bc', 'mths_since_recent_inq', 'num_accts_ever_120_pd', 'num_actv_bc_tl', 'num_actv_rev_tl', 'num_bc_sats', 'num_bc_tl', 'num_il_tl', 'num_op_rev_tl', 'num_rev_accts', 'num_rev_tl_bal_gt_0', 'num_sats', 'num_tl_120dpd_2m', 'num_tl_30dpd', 'num_tl_90g_dpd_24m', 'num_tl_op_past_12m', 'pct_tl_nvr_dlq', 'percent_bc_gt_75', 'pub_rec_bankruptcies', 'tax_liens', 'tot_hi_cred_lim', 'total_bal_ex_mort', 'total_bc_limit', 'total_il_high_credit_limit']
+
+[4] MODEL WEIGHTS (.pt):
+    - genre_v3.pt: Loaded.
+      Architecture detected: state_dict with 7 layers
+      Sample Layer [model_state]: Shape 429
+    - ann_flexible.pt: Loaded.
+      Architecture detected: state_dict with 4 layers
+      Sample Layer [model_state]: Shape 22
+
+[5] DATA ARRAYS (.npy):
+    - X_cont.npy: Shape (100000, 67)
+    - X_cat.npy: Shape (100000, 14)
+    - y.npy: Shape (100000,)
